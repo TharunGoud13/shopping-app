@@ -36,3 +36,11 @@
     transform: rotate(360deg);
   }
 }
+
+p,
+h1,
+h2,
+label,
+input {
+  font-family: "Courier New", Courier, monospace;
+}
