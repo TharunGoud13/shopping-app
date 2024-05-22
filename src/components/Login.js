@@ -18,12 +18,6 @@ const Login = ({ login, loginLoading }) => {
     console.log("error", errorInfo);
   };
 
-  //   const handleSubmit = (e) => {
-  //     console.log("UserName", input);
-  //     console.log("Password", password);
-  //     login({ username: input, password: password });
-  //   };
-
   const handleSubmit = async () => {
     const url = "https://apis.ccbp.in/login";
     const userDetails = { username, password };
