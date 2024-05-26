@@ -39,14 +39,7 @@ const Products = ({ getProducts, getProductsResponse, getProductsLoading }) => {
       <NavBarItem />
       <PrimeDeals />
       <Wrapper>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            // width: "88%",
-          }}
-        >
+        <FilterWrapper>
           <div>
             <p style={{ fontSize: "22px" }}>All Products</p>
           </div>
@@ -62,7 +55,7 @@ const Products = ({ getProducts, getProductsResponse, getProductsLoading }) => {
               <option value="PRICE_LOW">Price (Low-High)</option>
             </select>
           </div>
-        </div>
+        </FilterWrapper>
         {getProductsLoading ? (
           <center>
             <Spin />
@@ -80,7 +73,6 @@ const Products = ({ getProducts, getProductsResponse, getProductsLoading }) => {
                       src={item.image_url}
                       alt="product"
                       style={{
-                        height: "300px",
                         width: "100%",
                         borderRadius: "4px",
                         gap: "20px",
@@ -125,6 +117,18 @@ const Products = ({ getProducts, getProductsResponse, getProductsLoading }) => {
   );
 };
 
+const FilterWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 88%;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    margin-bottom: 5px;
+  }
+`;
+
 const Rating = styled.div`
   background-color: #1a73e8;
   color: white;
@@ -137,7 +141,7 @@ const Rating = styled.div`
 `;
 
 const ItemWrapper = styled.div`
-  // width: 63%;
+  width: 100%;
 `;
 
 const Wrapper = styled.div`
@@ -156,6 +160,10 @@ const Product = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 30px;
+  width: 90%;
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 `;
 
 const mapStateToProps = (state) => ({

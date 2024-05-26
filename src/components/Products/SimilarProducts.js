@@ -14,7 +14,7 @@ const SimilarProducts = ({ data }) => {
           >
             <img
               src={item.image_url}
-              style={{ height: "200px", borderRadius: "8px" }}
+              style={{ height: "250px", borderRadius: "8px" }}
             />
             <Title>{item?.title}</Title>
             <Brand>{`by ${item?.brand}`}</Brand>
@@ -82,13 +82,21 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   gap: 5%;
+  margin: 15px;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
-const Text = styled.h2`
+const Text = styled.h1`
   color: #3e4c59;
   font-weight: 500;
   font-size: 38px;
   text-align: center;
+
+  @media (max-width: 768px) {
+    font-size: 24px;
+  }
 `;
 
 export default SimilarProducts;

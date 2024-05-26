@@ -1,17 +1,24 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import NavBarItem from "../../NavBar";
 import styled from "styled-components";
 import { StarOutlined } from "@ant-design/icons";
 import SimilarProducts from "./SimilarProducts";
 import { Button, Spin } from "antd";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ProductDesc = () => {
   const [data, setData] = useState([]);
   const { id } = useParams();
   const jwtToken = Cookies.get("jwt_token");
+  const notify = () => {
+    toast("Cart items.....Coming Soon!!!", {
+      style: { backgroundColor: "black", color: "white" },
+    });
+  };
 
   const url = `https://apis.ccbp.in/products/${id}`;
 
@@ -31,13 +38,9 @@ const ProductDesc = () => {
         </center>
       )}
       <Wrapper>
-        <img
-          src={data?.image_url}
-          alt="item"
-          style={{ height: "578px", borderRadius: "8px" }}
-        />
+        <Img src={data?.image_url} alt="item" />
         <Desc>
-          <h2>{data?.title}</h2>
+          <Title>{data?.title}</Title>
           <Price>Rs {data.price}</Price>
           <div style={{ display: "flex" }}>
             <Rating>
@@ -62,9 +65,16 @@ const ProductDesc = () => {
             Brand: <Span>{data.brand}</Span>
           </p>
           <hr />
-          <Button type="primary ghost" style={{ marginTop: "10px" }}>
-            ADD TO CART
-          </Button>
+          <Link to="/cart">
+            <Button
+              type="primary ghost"
+              style={{ marginTop: "10px" }}
+              onClick={notify}
+            >
+              ADD TO CART
+            </Button>
+          </Link>
+          <ToastContainer />
         </Desc>
       </Wrapper>
       <SimilarProducts data={data} />
@@ -79,6 +89,10 @@ const Description = styled.p`
   margin-top: 16px;
   margin-bottom: 16px;
   line-height: 1.3;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
 `;
 
 const Price = styled.p`
@@ -89,12 +103,36 @@ const Price = styled.p`
   margin-bottom: 16px;
 `;
 
+const Title = styled.h1`
+  @media (max-width: 768px) {
+    font-size: 24px;
+    text-align: center;
+  }
+  font-size: 45px;
+  color: #3e4c59;
+`;
+
+const Img = styled.img`
+  border-radius: 8px;
+  height: 525px;
+
+  @media (max-width: 768px) {
+    height: 250px;
+  }
+`;
+
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   gap: 4%;
   margin-top: 5%;
-  width: 87%;
+
+
+  @media(max-width:768px){
+    flex-direction:column;
+    margin:15px;
+  }
+  // width: 87%;
   h2 {
     color: #3e4c59;
     font-weight: 500;
@@ -136,7 +174,10 @@ const Rating = styled.div`
 `;
 
 const Desc = styled.div`
-  max-width: 35%;
+  width: 100%;
+  @media (min-width: 768px) {
+    width: 35%;
+  }
 `;
 
 export default ProductDesc;

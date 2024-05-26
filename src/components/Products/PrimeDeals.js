@@ -4,16 +4,24 @@ import { getPrimeDeals } from "../store/action";
 import styled from "styled-components";
 import { Spin } from "antd";
 import { StarOutlined } from "@ant-design/icons";
+import { getProducts } from "../store/action";
+import { Link, Routes, Route } from "react-router-dom";
+import ProductDesc from "./ProductDesc";
 
 const PrimeDeals = ({
   getPrimeDeals,
   getPrimeDealsResponse,
   getPrimeDealsLoading,
   getPrimeDealsError,
+  getProducts,
 }) => {
   useEffect(() => {
     getPrimeDeals();
   }, [getPrimeDeals]);
+
+  const handleItemClick = (item) => {
+    getProducts({ id: item });
+  };
 
   return (
     <Wrapper>
@@ -29,12 +37,14 @@ const PrimeDeals = ({
             <Product>
               {getPrimeDealsResponse?.prime_deals?.length > 0 &&
                 getPrimeDealsResponse?.prime_deals.map((item) => (
-                  <ItemWrapper key={item.id}>
+                  <ItemWrapper
+                    key={item.id}
+                    onClick={() => handleItemClick(item?.id)}
+                  >
                     <img
                       src={item.image_url}
                       alt="product"
                       style={{
-                        height: "320px",
                         width: "100%",
                         borderRadius: "4px",
                       }}
@@ -84,6 +94,9 @@ const PrimeDeals = ({
           />
         </div>
       )}
+      <Routes>
+        <Route path="/products/:id" element={<ProductDesc />} />
+      </Routes>
     </Wrapper>
   );
 };
@@ -100,17 +113,24 @@ const Rating = styled.div`
 `;
 
 const ItemWrapper = styled.div`
-  // width: 63%;
+  width: 100%;
 `;
 
 const Wrapper = styled.div`
   margin-left: 5%;
+  // width: 63%;
 `;
 
 const Product = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 30px;
+  width: 90%;
+  cursor: pointer;
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 `;
 
 const mapStateToProps = (state) => ({
@@ -121,6 +141,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   getPrimeDeals,
+  getProducts,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PrimeDeals);

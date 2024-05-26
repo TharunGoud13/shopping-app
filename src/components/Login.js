@@ -37,15 +37,15 @@ const Login = () => {
   return (
     <Wrapper>
       <div>
-        <img
+        <Image
           src="https://assets.ccbp.in/frontend/react-js/nxt-trendz-login-img.png"
-          style={{ height: "400px" }}
+          // style={{ height: "400px" }}
           alt="login"
         />
       </div>
       <div>
         <LoginForm>
-          <img
+          <Logo
             src="https://assets.ccbp.in/frontend/react-js/nxt-trendz-logo-img.png"
             style={{ height: "40px" }}
             alt="app-logo"
@@ -58,7 +58,7 @@ const Login = () => {
           >
             <Form.Item name="Username" required style={{ marginTop: "20px" }}>
               <label htmlFor="input">USERNAME</label>
-              <Input
+              <InputEl
                 id="input"
                 style={{ paddingTop: "10px" }}
                 onChange={(e) => setUserName(e.target.value)}
@@ -73,6 +73,7 @@ const Login = () => {
               </label>
               <Input.Password
                 id="password"
+                style={{ backgroundColor: "#e2e8f0", color: "#64748b" }}
                 onChange={(e) => setPassword(e.target.value)}
               />
             </Form.Item>
@@ -92,12 +93,36 @@ const Login = () => {
   );
 };
 
+const InputEl = styled(Input)`
+  background-color: #e2e8f0;
+  color: #64748b;
+`;
+
+const Image = styled.img`
+  @media (max-width: 768px) {
+    width: 100%;
+    height: 150px;
+  }
+
+  @media (min-width: 769px) {
+    width: 100%;
+    max-width: 500px;
+  }
+`;
+
+const Logo = styled.img`
+  text-align: center;
+  align-items: center;
+`;
+
 const LoginForm = styled.form`
-  background-color: white;
-  box-shadow: 0px 0px 10px 4px lightgray;
-  //   text-align: center;
-  padding: 20px;
-  height: 300px;
+  @media (min-width: 769px) {
+    background-color: white;
+    box-shadow: 0px 0px 10px 4px lightgray;
+    //   text-align: center;
+    padding: 20px;
+    height: 300px;
+  }
 `;
 
 const Wrapper = styled.div`
@@ -105,6 +130,10 @@ const Wrapper = styled.div`
   justify-content: space-around;
   align-items: center;
   height: 100vh;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 
   label {
     color: #475569;
