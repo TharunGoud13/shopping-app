@@ -34,8 +34,8 @@ const PrimeDeals = ({
                       src={item.image_url}
                       alt="product"
                       style={{
-                        height: "300px",
-                        width: "300px",
+                        height: "320px",
+                        width: "100%",
                         borderRadius: "4px",
                       }}
                     />
@@ -100,7 +100,7 @@ const Rating = styled.div`
 `;
 
 const ItemWrapper = styled.div`
-  width: 63%;
+  // width: 63%;
 `;
 
 const Wrapper = styled.div`
@@ -110,6 +110,7 @@ const Wrapper = styled.div`
 const Product = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
 `;
 
 const mapStateToProps = (state) => ({

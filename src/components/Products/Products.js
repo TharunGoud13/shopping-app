@@ -8,6 +8,8 @@ import styled from "styled-components";
 import { StarOutlined, FilterOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import PrimeDeals from "./PrimeDeals";
+import { Link, Routes, Route } from "react-router-dom";
+import ProductDesc from "./ProductDesc";
 
 const Products = ({ getProducts, getProductsResponse, getProductsLoading }) => {
   const [optionValue, setOptionValue] = useState("PRICE_HIGH");
@@ -33,7 +35,7 @@ const Products = ({ getProducts, getProductsResponse, getProductsLoading }) => {
   };
 
   return (
-    <div style={{ width: "100%" }}>
+    <div>
       <NavBarItem />
       <PrimeDeals />
       <Wrapper>
@@ -42,7 +44,7 @@ const Products = ({ getProducts, getProductsResponse, getProductsLoading }) => {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            width: "88%",
+            // width: "88%",
           }}
         >
           <div>
@@ -73,15 +75,18 @@ const Products = ({ getProducts, getProductsResponse, getProductsLoading }) => {
                   key={item.id}
                   onClick={() => handleItemClick(item?.id)}
                 >
-                  <img
-                    src={item.image_url}
-                    alt="product"
-                    style={{
-                      height: "300px",
-                      width: "300px",
-                      borderRadius: "4px",
-                    }}
-                  />
+                  <Link to={`/products/${item?.id}`}>
+                    <img
+                      src={item.image_url}
+                      alt="product"
+                      style={{
+                        height: "300px",
+                        width: "100%",
+                        borderRadius: "4px",
+                        gap: "20px",
+                      }}
+                    />
+                  </Link>
                   <p style={{ fontSize: "18px", fontWeight: "600" }}>
                     {item.title}
                   </p>
@@ -112,6 +117,9 @@ const Products = ({ getProducts, getProductsResponse, getProductsLoading }) => {
               ))}
           </Product>
         )}
+        <Routes>
+          <Route path="/products/:id" element={<ProductDesc />} />
+        </Routes>
       </Wrapper>
     </div>
   );
@@ -129,7 +137,7 @@ const Rating = styled.div`
 `;
 
 const ItemWrapper = styled.div`
-  width: 63%;
+  // width: 63%;
 `;
 
 const Wrapper = styled.div`
@@ -147,6 +155,7 @@ const Wrapper = styled.div`
 const Product = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
 `;
 
 const mapStateToProps = (state) => ({

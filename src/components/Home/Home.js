@@ -16,8 +16,10 @@ const Home = () => {
       <NavBarItem />
       <Content>
         <div style={{ width: "50%" }}>
-          <h1 style={{ fontSize: "40px" }}>Clothes That Get YOU Noticed</h1>
-          <p style={{ fontSize: "22px" }}>
+          <h1 style={{ fontSize: "40px", color: "#1e293b" }}>
+            Clothes That Get YOU Noticed
+          </h1>
+          <p style={{ fontSize: "22px", color: "#64748b" }}>
             Fashion is part of the daily air and it does not quite help that it
             changes all the time. Clothes have always been a marker of the era
             and we are in a revolution. Your fashion makes you been seen and
@@ -39,6 +41,15 @@ const Home = () => {
     </Wrapper>
   );
 };
+
+const Heading = styled.h1`
+  color: #1e293b;
+  font-family: "Roboto";
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 1.2;
+  text-align: center;
+`;
 
 const Content = styled.div`
   display: flex;

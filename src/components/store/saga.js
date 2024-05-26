@@ -13,18 +13,15 @@ import Cookies from "js-cookie";
 let jwtToken = Cookies.get("jwt_token");
 
 function* getProductsSaga(action) {
-  console.log("action---", action);
   const payload = action.payload;
 
   let url = `https://apis.ccbp.in/products`;
 
   if (payload?.id) {
-    console.log("checkkk", payload?.id);
     url += `/${payload?.id}`;
   }
 
   if (payload?.sort) {
-    console.log("typeee", payload?.sort);
     url += `?sort_by=${payload?.sort}`;
   }
 

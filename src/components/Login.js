@@ -56,16 +56,20 @@ const Login = () => {
             initialValues={{ remember: true }}
             autoComplete="off"
           >
-            <Form.Item name="Username" required>
-              <label htmlFor="input">UserName</label>
-              <Input id="input" onChange={(e) => setUserName(e.target.value)} />
+            <Form.Item name="Username" required style={{ marginTop: "20px" }}>
+              <label htmlFor="input">USERNAME</label>
+              <Input
+                id="input"
+                style={{ paddingTop: "10px" }}
+                onChange={(e) => setUserName(e.target.value)}
+              />
             </Form.Item>
             <Form.Item
               name="Password"
               rules={[{ required: true, message: "Please Enter Password" }]}
             >
               <label htmlFor="password" required>
-                Password
+                PASSWORD
               </label>
               <Input.Password
                 id="password"
@@ -74,7 +78,11 @@ const Login = () => {
             </Form.Item>
           </Form>
 
-          <Button type="primary" onClick={handleSubmit}>
+          <Button
+            type="primary"
+            onClick={handleSubmit}
+            style={{ width: "100%" }}
+          >
             Submit
           </Button>
           <p id="error_text" style={{ color: "red" }}></p>
@@ -89,7 +97,7 @@ const LoginForm = styled.form`
   box-shadow: 0px 0px 10px 4px lightgray;
   //   text-align: center;
   padding: 20px;
-  //   height: 300px;
+  height: 300px;
 `;
 
 const Wrapper = styled.div`
@@ -97,6 +105,11 @@ const Wrapper = styled.div`
   justify-content: space-around;
   align-items: center;
   height: 100vh;
+
+  label {
+    color: #475569;
+    font-weight: 600;
+  }
 `;
 
 const mapStateToProps = (state) => ({});
