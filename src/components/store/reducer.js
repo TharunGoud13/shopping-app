@@ -8,6 +8,8 @@ import {
   GET_PRIME_DEALS,
   GET_PRIME_DEALS_SUCCESS,
   GET_PRIME_DEALS_FAILURE,
+  ADD_TO_CART,
+  REMOVE_FROM_CART,
 } from "./action";
 
 const initialState = {
@@ -20,6 +22,7 @@ const initialState = {
   getPrimeDealsLoading: false,
   getPrimeDealsResponse: [],
   getPrimeDealsError: null,
+  cart: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -74,6 +77,47 @@ const reducer = (state = initialState, action) => {
         ...state,
         getPrimeDealsError: action.error,
         getPrimeDealsLoading: false,
+      };
+
+    case "ADD_TO_CART":
+      // if we again add the same item, it will be in cart so we will check if current action.patload.id matches with id in cart of previous payload
+      const existingProductIndex = state.cart.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      console.log("action", action.payload);
+      if (existingProductIndex >= 0) {
+        // if id matches then we should update quantity so we assign the cart to empty list and access the item and update the quantity
+        const updatedCart = [...state.cart];
+        updatedCart[existingProductIndex].quantity += 1;
+        return { ...state, cart: updatedCart };
+      }
+      return {
+        ...state, //destructure the state
+        cart: [...state.cart, { ...action.payload, quantity: 1 }], // add values to cart list and in list we destrucuter action.payload and give quantity as 1
+      };
+    case "REMOVE_FROM_CART":
+      debugger;
+      return {
+        ...state,
+        cart: state.cart.filter((item) => item.id !== action.payload),
+      };
+    case "INCREMENT_QUANTITY":
+      return {
+        ...state,
+        cart: state.cart.map((item) =>
+          item.id === action.payload
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        ),
+      };
+    case "DECREMENT_QUANTITY":
+      return {
+        ...state,
+        cart: state.cart.map((item) =>
+          item.id === action.payload && item.quantity > 1
+            ? { ...item, quantity: item.quantity - 1 }
+            : item
+        ),
       };
     default:
       return state;

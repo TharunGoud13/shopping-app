@@ -9,16 +9,22 @@ import SimilarProducts from "./SimilarProducts";
 import { Button, Spin } from "antd";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { connect } from "react-redux";
+import {
+  addToCart,
+  decrementQuantity,
+  incrementQuantity,
+} from "../store/action";
 
-const ProductDesc = () => {
+const ProductDesc = ({
+  cart,
+  addToCart,
+  decrementQuantity,
+  incrementQuantity,
+}) => {
   const [data, setData] = useState([]);
   const { id } = useParams();
   const jwtToken = Cookies.get("jwt_token");
-  const notify = () => {
-    toast("Cart items.....Coming Soon!!!", {
-      style: { backgroundColor: "black", color: "white" },
-    });
-  };
 
   const url = `https://apis.ccbp.in/products/${id}`;
 
@@ -28,7 +34,21 @@ const ProductDesc = () => {
       .then((response) => setData(response.data));
   }, [id]);
 
+  const handleAddToCart = () => {
+    addToCart(data);
+  };
+
   console.log(data);
+
+  const handleIncrement = () => {
+    incrementQuantity(data.id);
+  };
+
+  const handleDecrement = () => {
+    decrementQuantity(data.id);
+  };
+
+  const productInCart = cart.find((item) => item.id === data.id);
   return (
     <div>
       <NavBarItem />
@@ -65,11 +85,16 @@ const ProductDesc = () => {
             Brand: <Span>{data.brand}</Span>
           </p>
           <hr />
+          <div>
+            <Button onClick={handleDecrement}>-</Button>
+            <span>{productInCart ? productInCart.quantity : 0}</span>
+            <Button onClick={handleIncrement}>+</Button>
+          </div>
           <Link to="/cart">
             <Button
               type="primary ghost"
               style={{ marginTop: "10px" }}
-              onClick={notify}
+              onClick={handleAddToCart}
             >
               ADD TO CART
             </Button>
@@ -180,4 +205,12 @@ const Desc = styled.div`
   }
 `;
 
-export default ProductDesc;
+const mapStateToProps = (state) => ({ cart: state.cart });
+
+const mapDispatchToProps = {
+  addToCart,
+  incrementQuantity,
+  decrementQuantity,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductDesc);

@@ -22,78 +22,63 @@ const PrimeDeals = ({
   const handleItemClick = (item) => {
     getProducts({ id: item });
   };
-
   return (
     <Wrapper>
-      {!getPrimeDealsError ? (
-        <>
-          <p style={{ fontSize: "22px" }}>Exclusive Prime Deals</p>
+      <>
+        <p style={{ fontSize: "22px" }}>Exclusive Prime Deals</p>
 
-          {getPrimeDealsLoading ? (
-            <center>
-              <Spin />
-            </center>
-          ) : (
-            <Product>
-              {getPrimeDealsResponse?.prime_deals?.length > 0 &&
-                getPrimeDealsResponse?.prime_deals.map((item) => (
-                  <ItemWrapper
-                    key={item.id}
-                    onClick={() => handleItemClick(item?.id)}
+        {getPrimeDealsLoading ? (
+          <center>
+            <Spin />
+          </center>
+        ) : (
+          <Product>
+            {getPrimeDealsResponse?.prime_deals?.length > 0 &&
+              getPrimeDealsResponse?.prime_deals.map((item) => (
+                <ItemWrapper
+                  key={item.id}
+                  onClick={() => handleItemClick(item?.id)}
+                >
+                  <img
+                    src={item.image_url}
+                    alt="product"
+                    style={{
+                      width: "100%",
+                      borderRadius: "4px",
+                    }}
+                  />
+                  <p style={{ fontSize: "18px", fontWeight: "600" }}>
+                    {item.title}
+                  </p>
+                  <p>by {item.brand}</p>
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: "10px",
+                      justifyContent: "space-between",
+                      marginTop: "-20px",
+                    }}
                   >
-                    <img
-                      src={item.image_url}
-                      alt="product"
-                      style={{
-                        width: "100%",
-                        borderRadius: "4px",
-                      }}
-                    />
-                    <p style={{ fontSize: "18px", fontWeight: "600" }}>
-                      {item.title}
-                    </p>
-                    <p>by {item.brand}</p>
-                    <div
-                      style={{
-                        display: "flex",
-                        gap: "10px",
-                        justifyContent: "space-between",
-                        marginTop: "-20px",
-                      }}
-                    >
-                      <h4>Rs {item.price}/-</h4>
-                      <Rating>
-                        <p>
-                          {item.rating}{" "}
-                          <StarOutlined
-                            style={{
-                              color: "white",
-                              fill: "white",
-                              marginLeft: "10px",
-                            }}
-                          />
-                        </p>
-                      </Rating>
-                    </div>
-                  </ItemWrapper>
-                ))}
-            </Product>
-          )}
-        </>
-      ) : (
-        <div>
-          <img
-            src="https://assets.ccbp.in/frontend/react-js/exclusive-deals-banner-img.png"
-            alt="Register Prime"
-            style={{
-              height: "300px",
-              marginTop: "30px",
-              borderRadius: "4px",
-              width: "88%",
-            }}
-          />
-        </div>
-      )}
+                    <h4>Rs {item.price}/-</h4>
+                    <Rating>
+                      <p>
+                        {item.rating}{" "}
+                        <StarOutlined
+                          style={{
+                            color: "white",
+                            fill: "white",
+                            marginLeft: "10px",
+                          }}
+                        />
+                      </p>
+                    </Rating>
+                  </div>
+                </ItemWrapper>
+              ))}
+          </Product>
+        )}
+      </>
+
       <Routes>
         <Route path="/products/:id" element={<ProductDesc />} />
       </Routes>

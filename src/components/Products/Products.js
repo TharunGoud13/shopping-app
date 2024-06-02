@@ -37,7 +37,7 @@ const Products = ({ getProducts, getProductsResponse, getProductsLoading }) => {
   return (
     <div>
       <NavBarItem />
-      <PrimeDeals />
+      {/* <PrimeDeals /> */}
       <Wrapper>
         <FilterWrapper>
           <div>
