@@ -44,6 +44,8 @@ const Login = () => {
         />
       </div>
       <div>
+        <span style={{ marginRight: "10px" }}>Username: rahul</span>
+        <span>Password: rahul@2021</span>
         <LoginForm>
           <Logo
             src="https://assets.ccbp.in/frontend/react-js/nxt-trendz-logo-img.png"

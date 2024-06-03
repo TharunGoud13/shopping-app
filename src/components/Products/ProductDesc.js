@@ -9,74 +9,89 @@ import SimilarProducts from "./SimilarProducts";
 import { Button, Spin } from "antd";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { connect } from "react-redux";
+import { addToCart } from "../store/action";
 
-const ProductDesc = () => {
+const ProductDesc = ({ addToCart }) => {
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
   const { id } = useParams();
   const jwtToken = Cookies.get("jwt_token");
-  const notify = () => {
-    toast("Cart items.....Coming Soon!!!", {
-      style: { backgroundColor: "black", color: "white" },
-    });
-  };
 
   const url = `https://apis.ccbp.in/products/${id}`;
 
   useEffect(() => {
     axios
       .get(url, { headers: { Authorization: `Bearer ${jwtToken}` } })
-      .then((response) => setData(response.data));
+      .then((response) => {
+        setData(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setLoading(false);
+      });
   }, [id]);
+
+  const handleAddToCart = () => {
+    addToCart(data);
+  };
 
   console.log(data);
   return (
     <div>
       <NavBarItem />
-      {data?.length === 0 && (
+
+      {loading ? (
         <center>
           <Spin />
         </center>
-      )}
-      <Wrapper>
-        <Img src={data?.image_url} alt="item" />
-        <Desc>
-          <Title>{data?.title}</Title>
-          <Price>Rs {data.price}</Price>
-          <div style={{ display: "flex" }}>
-            <Rating>
-              <p>
-                {data.rating}{" "}
-                <StarOutlined
-                  style={{
-                    color: "white",
-                    fill: "white",
-                    marginLeft: "10px",
-                  }}
-                />
-              </p>
-            </Rating>
-            <Reviews>{data.total_reviews} Reviews</Reviews>
-          </div>
-          <Description>{data.description}</Description>
-          <p style={{ color: "#171f46", fontSize: "22px", fontWeight: "500" }}>
-            Avaliability: <Span>{data.availability}</Span>
-          </p>
-          <p style={{ color: "#171f46", fontSize: "22px", fontWeight: "500" }}>
-            Brand: <Span>{data.brand}</Span>
-          </p>
-          <hr />
-          <Link to="/cart">
-            <Button
-              type="primary ghost"
-              style={{ marginTop: "10px" }}
-              onClick={notify}
+      ) : (
+        <Wrapper>
+          <Img src={data?.image_url} alt="item" />
+          <Desc>
+            <Title>{data?.title}</Title>
+            <Price>Rs {data.price}</Price>
+            <div style={{ display: "flex" }}>
+              <Rating>
+                <p>
+                  {data.rating}{" "}
+                  <StarOutlined
+                    style={{
+                      color: "white",
+                      fill: "white",
+                      marginLeft: "10px",
+                    }}
+                  />
+                </p>
+              </Rating>
+              <Reviews>{data.total_reviews} Reviews</Reviews>
+            </div>
+            <Description>{data.description}</Description>
+            <p
+              style={{ color: "#171f46", fontSize: "22px", fontWeight: "500" }}
             >
-              ADD TO CART
-            </Button>
-          </Link>
-          <ToastContainer />
-        </Desc>
-      </Wrapper>
+              Avaliability: <Span>{data.availability}</Span>
+            </p>
+            <p
+              style={{ color: "#171f46", fontSize: "22px", fontWeight: "500" }}
+            >
+              Brand: <Span>{data.brand}</Span>
+            </p>
+            <hr />
+            <Link to="/cart">
+              <Button
+                type="primary ghost"
+                style={{ marginTop: "10px" }}
+                onClick={handleAddToCart}
+              >
+                ADD TO CART
+              </Button>
+            </Link>
+            <ToastContainer />
+          </Desc>
+        </Wrapper>
+      )}
       <SimilarProducts data={data} />
     </div>
   );
@@ -180,4 +195,10 @@ const Desc = styled.div`
   }
 `;
 
-export default ProductDesc;
+const mapStateToProps = (state) => ({});
+
+const mapDispatchToProps = {
+  addToCart,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductDesc);
