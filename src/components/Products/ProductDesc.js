@@ -7,12 +7,8 @@ import styled from "styled-components";
 import { StarOutlined } from "@ant-design/icons";
 import SimilarProducts from "./SimilarProducts";
 import { Button, Spin } from "antd";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { connect } from "react-redux";
-import { addToCart } from "../store/action";
 
-const ProductDesc = ({ addToCart }) => {
+const ProductDesc = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
@@ -34,7 +30,7 @@ const ProductDesc = ({ addToCart }) => {
   }, [id]);
 
   const handleAddToCart = () => {
-    addToCart(data);
+    //
   };
 
   console.log(data);
@@ -51,7 +47,7 @@ const ProductDesc = ({ addToCart }) => {
           <Img src={data?.image_url} alt="item" />
           <Desc>
             <Title>{data?.title}</Title>
-            <Price>Rs {data.price}</Price>
+            <Price>Rs {data.price} /-</Price>
             <div style={{ display: "flex" }}>
               <Rating>
                 <p>
@@ -88,7 +84,6 @@ const ProductDesc = ({ addToCart }) => {
                 ADD TO CART
               </Button>
             </Link>
-            <ToastContainer />
           </Desc>
         </Wrapper>
       )}
@@ -195,10 +190,4 @@ const Desc = styled.div`
   }
 `;
 
-const mapStateToProps = (state) => ({});
-
-const mapDispatchToProps = {
-  addToCart,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProductDesc);
+export default ProductDesc;

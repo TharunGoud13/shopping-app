@@ -1,28 +1,33 @@
-import {
-  GET_PRODUCTS,
-  getProductsSuccess,
-  getProductsFailure,
-  GET_PRIME_DEALS,
-  getPrimeDealsSuccess,
-  getPrimeDealsFailure,
-} from "./action";
+import { GET_PRODUCTS, getProductsSuccess, getProductsFailure } from "./action";
 import { takeLatest, put, call } from "redux-saga/effects";
 import axios from "axios";
 import Cookies from "js-cookie";
 
-let jwtToken = Cookies.get("jwt_token");
-
 function* getProductsSaga(action) {
   const payload = action.payload;
+  console.log(payload);
 
-  let url = `https://apis.ccbp.in/products`;
+  let url = `https://apis.ccbp.in/products?sort_by=${payload?.sort}`;
+  let jwtToken = Cookies.get("jwt_token");
 
   if (payload?.id) {
     url += `/${payload?.id}`;
   }
 
-  if (payload?.sort) {
-    url += `?sort_by=${payload?.sort}`;
+  if (payload?.category) {
+    url += `&category=${payload.category}`;
+  }
+
+  if (payload?.rating) {
+    url += `&rating=${payload?.rating}`;
+  }
+
+  // if (payload?.sort) {
+  //   url += `?sort_by=${payload?.sort}`;
+  // }
+
+  if (payload?.title) {
+    url += `&title_search=${payload?.title}`;
   }
 
   try {
@@ -35,24 +40,6 @@ function* getProductsSaga(action) {
   }
 }
 
-function* getPrimeDealsSaga() {
-  const url = "https://apis.ccbp.in/prime-deals";
-  try {
-    const response = yield call(axios.get, url, {
-      headers: { Authorization: `Bearer ${jwtToken}` },
-    });
-    console.log(response);
-    if (response.status === 200) {
-      yield put(getPrimeDealsSuccess(response.data));
-    } else {
-      yield put(getPrimeDealsFailure(response));
-    }
-  } catch (error) {
-    yield put(getPrimeDealsFailure(error));
-  }
-}
-
 export default function* rootSaga() {
   yield takeLatest(GET_PRODUCTS, getProductsSaga);
-  yield takeLatest(GET_PRIME_DEALS, getPrimeDealsSaga);
 }

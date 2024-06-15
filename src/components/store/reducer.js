@@ -5,11 +5,6 @@ import {
   GET_PRODUCTS,
   GET_PRODUCTS_SUCCESS,
   GET_PRODUCTS_FAILURE,
-  GET_PRIME_DEALS,
-  GET_PRIME_DEALS_SUCCESS,
-  GET_PRIME_DEALS_FAILURE,
-  ADD_TO_CART,
-  REMOVE_FROM_CART,
 } from "./action";
 
 const initialState = {
@@ -19,10 +14,6 @@ const initialState = {
   getProductsLoading: false,
   getProductsResponse: [],
   getProductsError: null,
-  getPrimeDealsLoading: false,
-  getPrimeDealsResponse: [],
-  getPrimeDealsError: null,
-  cart: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -61,33 +52,7 @@ const reducer = (state = initialState, action) => {
         getProductsLoading: false,
         getProductsError: action.error,
       };
-    case GET_PRIME_DEALS:
-      return {
-        ...state,
-        getPrimeDealsLoading: true,
-      };
-    case GET_PRIME_DEALS_SUCCESS:
-      return {
-        ...state,
-        getPrimeDealsResponse: action.payload,
-        getPrimeDealsLoading: false,
-      };
-    case GET_PRIME_DEALS_FAILURE:
-      return {
-        ...state,
-        getPrimeDealsError: action.error,
-        getPrimeDealsLoading: false,
-      };
-    case ADD_TO_CART:
-      return {
-        ...state,
-        cart: [...state.cart, action.payload],
-      };
-    case REMOVE_FROM_CART:
-      return {
-        ...state,
-        cart: state.cart.filter((item) => item.id !== action.payload),
-      };
+
     default:
       return state;
   }

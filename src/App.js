@@ -7,15 +7,11 @@ import NotFound from "./components/NotFound";
 import Products from "./components/Products/Products";
 import Cart from "./components/Cart";
 import ProductDesc from "./components/Products/ProductDesc";
-// import ProtectedRoute from "./components/ProtectedRoute";
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {/* <Route path="/" element={<ProtectedRoute />}>
-          <Route index element={<Home />} />
-        </Route> */}
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/products/*" element={<Products />} />

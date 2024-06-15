@@ -1,7 +1,7 @@
 import { Button } from "antd";
 import React from "react";
 import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
 const NavBarItem = () => {
@@ -12,7 +12,7 @@ const NavBarItem = () => {
     navigate("/login", { replace: true });
   };
   return (
-    <div style={{ width: "100%" }}>
+    <div>
       <NavBar>
         <MobileNav>
           <div>
@@ -36,16 +36,41 @@ const NavBarItem = () => {
         </MobileNav>
 
         <NavItems>
-          <Link to="/" style={{ textDecoration: "none" }}>
+          <NavLink
+            className={({ isActive }) => `no-underline 
+            ${
+              isActive
+                ? "text-[#1a73e8] font-bold border-b-[6px] border-b-orange-500"
+                : "text-gray-500"
+            } `}
+            to="/"
+          >
             <p>Home</p>
-          </Link>
-          <Link to="/products" style={{ textDecoration: "none" }}>
+          </NavLink>
+          <NavLink
+            to="/products"
+            className={({ isActive }) => `no-underline 
+              ${
+                isActive
+                  ? "text-[#1a73e8] font-bold border-b-[6px] border-b-orange-500"
+                  : "text-gray-500"
+              } `}
+          >
             <p>Products</p>
-          </Link>
+          </NavLink>
 
-          <Link to="/cart" style={{ textDecoration: "none" }}>
+          <NavLink
+            to="/cart"
+            className={({ isActive }) =>
+              `no-underline ${
+                isActive
+                  ? "text-[#1a73e8] font-bold border-b-[6px] border-b-orange-500"
+                  : "text-gray-500"
+              }`
+            }
+          >
             <p>Cart</p>
-          </Link>
+          </NavLink>
 
           <Button
             type="primary ghost"
@@ -57,24 +82,24 @@ const NavBarItem = () => {
         </NavItems>
       </NavBar>
       <IconsContainer>
-        <Link to="/">
+        <NavLink to="/">
           <Image
             src="https://assets.ccbp.in/frontend/react-js/nxt-trendz-home-icon.png"
             alt="home-image"
           />
-        </Link>
-        <Link to="/products">
+        </NavLink>
+        <NavLink to="/products">
           <Image
             src="https://assets.ccbp.in/frontend/react-js/nxt-trendz-products-icon.png"
             alt="home-image"
           />
-        </Link>
-        <Link to="/cart">
+        </NavLink>
+        <NavLink to="/cart">
           <Image
             src="https://assets.ccbp.in/frontend/react-js/nxt-trendz-cart-icon.png"
             alt="home-image"
           />
-        </Link>
+        </NavLink>
       </IconsContainer>
     </div>
   );
@@ -121,6 +146,7 @@ const IconsContainer = styled.div`
 
   @media (max-width: 768px) {
     display: flex;
+    align-items: center;
     justify-content: space-around;
     background-color: #e6f6ff;
     padding: 20px;
@@ -130,8 +156,10 @@ const IconsContainer = styled.div`
 
 const NavItems = styled.div`
   display: flex;
+  justify-content: center;
   gap: 40px;
   margin-right: 10%;
+  align-items: center;
 
   @media (max-width: 768px) {
     display: none;
@@ -148,7 +176,8 @@ const NavBar = styled.div`
   background-color: white;
   position: sticky;
   top: 0;
-  width: 100%;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #f3f3f3;
 `;
 
 export default NavBarItem;

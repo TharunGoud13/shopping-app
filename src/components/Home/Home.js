@@ -66,7 +66,7 @@ const Img = styled.img`
   @media (max-width: 768px) {
     display: flex;
     justify-content: center;
-    margin: 30px;
+    margin: 10px 0px;
 
     width: 100%;
     // max-width: 250px;
@@ -87,6 +87,7 @@ const Text = styled.p`
   line-height: 28px;
   color: #64748b;
   margin-bottom: 8%;
+  max-width: 85%;
 
   @media (max-width: 768px) {
     font-size: 14px;
@@ -109,8 +110,9 @@ const Heading = styled.h1`
 
 const Content = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
+  width: 100%;
 `;
 
 const Wrapper = styled.div``;
