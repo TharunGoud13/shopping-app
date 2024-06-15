@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import NavBarItem from "../../NavBar";
@@ -7,6 +7,7 @@ import styled from "styled-components";
 import { StarOutlined } from "@ant-design/icons";
 import SimilarProducts from "./SimilarProducts";
 import { Button, Spin } from "antd";
+import { CartContext } from "../context/CartContext";
 
 const ProductDesc = () => {
   const [data, setData] = useState([]);
@@ -15,6 +16,8 @@ const ProductDesc = () => {
   const jwtToken = Cookies.get("jwt_token");
 
   const url = `https://apis.ccbp.in/products/${id}`;
+
+  const { addToCart } = useContext(CartContext);
 
   useEffect(() => {
     axios
@@ -29,11 +32,10 @@ const ProductDesc = () => {
       });
   }, [id]);
 
-  const handleAddToCart = () => {
-    //
+  const handleAddToCart = (data) => {
+    addToCart(data);
   };
 
-  console.log(data);
   return (
     <div>
       <NavBarItem />
@@ -79,7 +81,7 @@ const ProductDesc = () => {
               <Button
                 type="primary ghost"
                 style={{ marginTop: "10px" }}
-                onClick={handleAddToCart}
+                onClick={() => handleAddToCart(data)}
               >
                 ADD TO CART
               </Button>

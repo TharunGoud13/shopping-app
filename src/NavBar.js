@@ -1,11 +1,13 @@
 import { Button } from "antd";
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import { CartContext } from "./components/context/CartContext";
 
 const NavBarItem = () => {
   const navigate = useNavigate();
+  const { cart } = useContext(CartContext);
   const handleLogout = () => {
     // <Navigate to="/login" />;
     Cookies.remove("jwt_token");
@@ -69,7 +71,12 @@ const NavBarItem = () => {
               }`
             }
           >
-            <p>Cart</p>
+            <p className="w-[50px]">
+              Cart{" "}
+              <span className="text-[#1a73e8] bg-blue-200 p-[2px] rounded">
+                {cart && cart?.length}
+              </span>
+            </p>
           </NavLink>
 
           <Button
@@ -95,6 +102,9 @@ const NavBarItem = () => {
           />
         </NavLink>
         <NavLink to="/cart">
+          <p className="text-[#1a73e8] mt-[-10px] flex items-center justify-center rounded">
+            {cart && cart?.length}
+          </p>
           <Image
             src="https://assets.ccbp.in/frontend/react-js/nxt-trendz-cart-icon.png"
             alt="home-image"
